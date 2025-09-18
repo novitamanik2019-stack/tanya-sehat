@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tanya Sehat - Edukasi Kesehatan</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+background: #f8fdfd;
+color: #333;
+}
+header {
+background: #2bb3a3;
+color: white;
+text-align: center;
+padding: 20px;
+}
+nav {
+background: #20867a;
+padding: 10px;
+text-align: center;
+}
+nav a {
+color: white;
+margin: 0 15px;
+text-decoration: none;
+font-weight: bold;
+}
+section {
+padding: 20px;
+}
+h2 {
+color: #2bb3a3;
+}
+.form-box {
+background: #e9f7f7;
+padding: 20px;
+border-radius: 10px;
+max-width: 500px;
+margin: auto;
+}
+input, textarea, button {
+width: 100%;
+padding: 10px;
+margin: 8px 0;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+button {
+background: #2bb3a3;
+color: white;
+border: none;
+cursor: pointer;
+}
+button:hover {
+background: #20867a;
+}
+.question-box {
+background: #fff;
+border: 1px solid #ddd;
+padding: 15px;
+margin-top: 10px;
+border-radius: 8px;
+}
+.question-box h4 {
+margin: 0;
+color: #20867a;
+}
+.answer {
+margin-top: 10px;
+padding: 10px;
+background: #f0fdfa;
+border-left: 4px solid #2bb3a3;
+border-radius: 5px;
+}
+.answer-form {
+margin-top: 10px;
+}
+.answer-form textarea {
+width: 100%;
+padding: 8px;
+margin-bottom: 8px;
+}
+footer {
+background: #2bb3a3;
+color: white;
+text-align: center;
+padding: 15px;
+margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Tanya Sehat</h1>
+<p>Website Edukasi Kesehatan & Tanya Jawab</p>
+</header>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#artikel">Artikel</a>
+<a href="#tanya">Tanya Jawab</a>
+<a href="#tentang">Tentang Kami</a>
+</nav>
+
+<section id="home">
+<h2>Selamat Datang di Tanya Sehat</h2>
+<p>Website ini dibuat untuk memberikan informasi kesehatan dan menjawab pertanyaan seputar kesehatan lingkungan, gizi, dan gaya hidup sehat.</p>
+</section>
+
+<section id="artikel">
+<h2>Artikel Kesehatan</h2>
+<ul>
+<li><b>Pola Hidup Sehat di Era Digital</b> – Cara menjaga kesehatan meskipun sibuk kuliah dan bekerja.</li>
+<li><b>Pentingnya Makanan Bergizi</b> – Edukasi gizi seimbang untuk mencegah stunting.</li>
+<li><b>Kesehatan Lingkungan</b> – Hubungan antara lingkungan bersih dengan kualitas hidup.</li>
+</ul>
+</section>
+
+<section id="tanya">
+<h2>Tanya Jawab</h2>
+<div class="form-box">
+<form id="questionForm">
+<label for="nama">Nama:</label>
+<input type="text" id="nama" name="nama" required>
+
+<label for="pertanyaan">Pertanyaan:</label>
+<textarea id="pertanyaan" name="pertanyaan" rows="4" required></textarea>
+
+<button type="submit">Kirim Pertanyaan</button>
+</form>
+</div>
+
+<h3 style="text-align:center; margin-top:30px;">Daftar Pertanyaan</h3>
+<div id="questionList"></div>
+</section>
+
+<section id="tentang">
+<h2>Tentang Kami</h2>
+<p>Kami adalah mahasiswa Teknologi Kesehatan yang membuat website ini sebagai media edukasi dan tanya jawab seputar kesehatan untuk masyarakat.</p>
+</section>
+
+<footer>
+<p>&copy; 2025 Tanya Sehat | Dibuat oleh Mahasiswa Teknologi Kesehatan</p>
+</footer>
+
+<script>
+document.getElementById("questionForm").addEventListener("submit", function(e) {
+e.preventDefault();
+
+let nama = document.getElementById("nama").value;
+let pertanyaan = document.getElementById("pertanyaan").value;
+
+let questionBox = document.createElement("div");
+questionBox.classList.add("question-box");
+
+questionBox.innerHTML = `
+<h4>${nama} bertanya:</h4>
+<p>${pertanyaan}</p>
+<button class="jawabBtn">Jawab</button>
+<div class="answer-section"></div>
+`;
+
+document.getElementById("questionList").appendChild(questionBox);
+
+// reset form
+document.getElementById("questionForm").reset();
+
+// Tambahkan event untuk tombol Jawab
+let jawabBtn = questionBox.querySelector(".jawabBtn");
+jawabBtn.addEventListener("click", function() {
+let answerSection = questionBox.querySelector(".answer-section");
+
+// kalau form sudah ada, jangan ditambah lagi
+if (answerSection.querySelector("form")) return;
+
+let form = document.createElement("form");
+form.classList.add("answer-form");
+
+form.innerHTML = `
+<textarea placeholder="Tulis jawaban di sini..." required></textarea>
+<button type="submit">Kirim Jawaban</button>
+`;
+
+form.addEventListener("submit", function(e) {
+e.preventDefault();
+let jawaban = form.querySelector("textarea").value;
+
+let answerDiv = document.createElement("div");
+answerDiv.classList.add("answer");
+answerDiv.innerHTML = `<b>Jawaban:</b> <p>${jawaban}</p>`;
+
+answerSection.innerHTML = ""; // hapus form
+answerSection.appendChild(answerDiv);
+});
+
+answerSection.appendChild(form);
+});
+});
+</script>
+
+</body>
+</html>
